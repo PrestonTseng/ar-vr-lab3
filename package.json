@@ -1,0 +1,22 @@
+{
+  "name": "webim-pano-pwa",
+  "version": "1.0.0",
+  "description": "WeBIM Pano PWA version",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/WeBIM_RD/webim-pano-pwa.git"
+  },
+  "author": "Jacky <csps50404@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/WeBIM_RD/webim-pano-pwa/issues"
+  },
+  "homepage": "https://gitlab.com/WeBIM_RD/webim-pano-pwa#readme",
+  "devDependencies": {
+    "serve": "^11.1.0"
+  }
+}

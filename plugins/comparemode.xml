@@ -1,0 +1,80 @@
+﻿<krpano>
+
+  <plugin name="slider_bg" url="./slider_background.png" keep="true" visible="false" onloaded="set_css_id('sliderPanoCompare');" align="bottom" x="0" y="85" handcursor="false" zorder="1" />
+
+  <plugin name="slider_grip" url="./slider_grip.png" keep="true"  align="left" edge="center" parent="slider_bg" x="0" zorder="2"
+      dragging="if(pressed, 
+						  sub(dx, mouse.stagex, drag_stagex); 
+						  add(newx, drag_currentx, dx); 
+						  if(newx LT 0, set(newx,0));
+						  if(newx GT plugin[slider_bg].pixelwidth, copy(newx,plugin[slider_bg].pixelwidth));
+						  copy(x,newx);
+						  div(val, newx, plugin[slider_bg].pixelwidth);
+						  setblend(get(val));
+						  delayedcall(0,dragging());
+					    );"
+      ondown="copy(drag_currentx,x); copy(drag_stagex,mouse.stagex); dragging();"
+			  />
+
+  <action name="startcompare">
+    set(blendVal, 0.02);
+    setblend(0);
+    setblend(get(blendVal));
+    lookto(0,0);
+  </action>
+
+  <action name="addface">
+      addhotspot(%1);
+      set(hotspot[%1].url, %2);
+      set(hotspot[%1].ath, %3);
+      set(hotspot[%1].atv, %4);
+      set(hotspot[%1].width, 1000);
+      set(hotspot[%1].height, 1000);
+      set(hotspot[%1].distorted, true);
+      set(hotspot[%1].enabled, false);
+      if(isflash, set(hotspot[%1].visible, false));
+      set(hotspot[%1].alpha, 0.0); 
+      set(hotspot[%1].details, 16);
+  </action>
+      
+   <action name="addcube">
+      addface(face_%1_F, './images/%2/%2_f.jpg',    0,   0);
+      addface(face_%1_L, './images/%2/%2_l.jpg',  -90,   0);
+      addface(face_%1_R, './images/%2/%2_r.jpg',  +90,   0);
+      addface(face_%1_B, './images/%2/%2_b.jpg', +180,   0);
+      addface(face_%1_Z, './images/%2/%2_u.jpg',    0, -90);
+      addface(face_%1_N, './images/%2/%2_d.jpg',    0, +90);
+  </action>
+
+  <action name="removecube">
+    removehotspot(face_%1_F);
+    removehotspot(face_%1_L);
+    removehotspot(face_%1_R);
+    removehotspot(face_%1_B);
+    removehotspot(face_%1_Z);
+    removehotspot(face_%1_N);
+  </action>
+
+
+  <action name="setcubealpha" >
+      setalpha(hotspot[face_%1_F], %2);
+      setalpha(hotspot[face_%1_L], %2);
+      setalpha(hotspot[face_%1_R], %2);
+      setalpha(hotspot[face_%1_B], %2);
+      setalpha(hotspot[face_%1_Z], %2);
+      setalpha(hotspot[face_%1_N], %2);
+  </action>
+
+
+   <action name="setblend" devices="html5">
+      set(blend1, %1);
+      sub(blend2, 1.0, %1);
+      copy(hotspot[face_comparePano_F].alpha, blend1);
+      copy(hotspot[face_comparePano_L].alpha, blend1);
+      copy(hotspot[face_comparePano_R].alpha, blend1);
+      copy(hotspot[face_comparePano_B].alpha, blend1);
+      copy(hotspot[face_comparePano_Z].alpha, blend1);
+      copy(hotspot[face_comparePano_N].alpha, blend1);
+  </action>
+  
+</krpano>

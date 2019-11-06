@@ -1,0 +1,241 @@
+﻿<krpano>
+  <action name="hideHotSpots">
+    for(set(i,0), i LT hotspot.count, inc(i),
+    if(hotspot[get(i)].tag == hs,
+    set(hotspot[get(i)].visible,false);
+    );
+    );
+  </action>
+
+  <action name="showHotSpots">
+    for(set(i,0), i LT hotspot.count, inc(i),
+    if(hotspot[get(i)].tag == hs,
+    set(hotspot[get(i)].visible,true);
+    );
+    );
+  </action>
+
+  <action name="draghotspot">
+    if(dragging,
+    screentosphere(mouse.x,mouse.y,ath,atv);
+    delayedcall(0,draghotspot());
+    );
+  </action>
+
+  <style name="tooltip"
+       onover="tooltipover()"
+       onout="tooltipout()"/>
+
+  <action name="tooltipover">
+    if(webvr.isenabled != true,
+    tween(alpha, 1);
+    tween(scale, 0.8);
+    copy(layer[tooltip].html, tooltip);
+    set(layer[tooltip].visible, true);
+    tween(layer[tooltip].alpha, 1.0, 0.5);
+    asyncloop(hovering, copy(layer[tooltip].x,mouse.stagex); copy(layer[tooltip].y,mouse.stagey); );
+    ,
+    trace('tooltipover');
+    copy(layer[vrtooltip].html, tooltip);
+    set(layer[vrtooltip].visible, true);
+    tween(layer[vrtooltip].alpha, 1.0, 0.5);
+    copy(layer[vrtooltipa].html, tooltip);
+    set(layer[vrtooltipa].visible, true);
+    tween(layer[vrtooltipa].alpha, 1.0, 0.5);
+    asyncloop(hovering, positionTooltip(););
+    );
+  </action>
+
+  <action name="tooltipout">
+    if(webvr.isenabled != true,
+    tween(alpha, 0.8);
+    tween(scale, 0.5);
+    tween(layer[tooltip].alpha, 0.0, 0.25, default, set(layer[tooltip].visible,false), copy(layer[tooltip].x,mouse.stagex); copy(layer[tooltip].y,mouse.stagey); );
+    ,
+    tween(layer[vrtooltip].alpha, 0.0, 0.25, default, set(layer[vrtooltip].visible,false));
+    tween(layer[vrtooltipa].alpha, 0.0, 0.25, default, set(layer[vrtooltipa].visible,false));
+    positionTooltip();
+    );
+  </action>
+
+  <action name="positionTooltip">
+    spheretoscreen(hotspot[vr_cursor].ath, hotspot[vr_cursor].atv, pos_x, pos_y);
+    div(pos_x, stagewidth, 4);
+    div(pos_y, stageheight, 2);
+    sub(pos_x_a, stagewidth, pos_x);
+
+    trace(plugin[WebVR].mobilevr_lens_overlap);
+    trace(view.hlookat);
+
+    copy(layer[vrtooltip].x,pos_x); copy(layer[vrtooltip].y,pos_y);
+    copy(layer[vrtooltipa].x,pos_x_a); copy(layer[vrtooltipa].y,pos_y);
+  </action>
+
+  <style name="mapTooltip"
+         onover="if(webvr.isenabled != true,
+                 copy(layer[tooltip].html, tooltip);
+	               set(layer[tooltip].visible, true);
+	               tween(layer[tooltip].alpha, 1.0, 0.5);
+	               asyncloop(hovering, copy(layer[tooltip].x,mouse.stagex); copy(layer[tooltip].y,mouse.stagey); );
+                 ,);"
+         onout="if(webvr.isenabled != true,
+                 tween(layer[tooltip].alpha, 0.0, 0.25, default, set(layer[tooltip].visible,false), copy(layer[tooltip].x,mouse.stagex); copy(layer[tooltip].y,mouse.stagey); );
+                 ,);"
+	               />
+
+  <!-- the 'tooltip' textfield -->
+  <layer name="tooltip" keep="true"
+         url="%SWFPATH%/plugins/textfield.swf"
+         parent="STAGE"
+         visible="false" alpha="0"
+         enabled="false"
+         align="lefttop"
+         edge="bottom"
+         oy="-2"
+         background="false" backgroundcolor="0xFFFFFF" backgroundalpha="1.0"
+         border="false" bordercolor="0x000000" borderalpha="1.0"
+         borderwidth="1.0" roundedge="0"
+         shadow="0.0" shadowrange="4.0" shadowangle="45" shadowcolor="0x000000" shadowalpha="1.0"
+         textshadow="1" textshadowrange="6.0" textshadowangle="90" textshadowcolor="0x000000" textshadowalpha="1.0"
+         css="background-color:rgba(0, 0, 0, 0.5); padding:5px; border-width:1px; border-color:#222; border-style: solid; border-radius: 5px; text-align:center; color:#FFFFFF; font-weight:bold; font-size:18px; font-family:Microsoft JhengHei"
+         html=""
+	       />
+
+  <layer name="vrtooltip" keep="true"
+       url="%SWFPATH%/plugins/textfield.swf"
+       parent="STAGE"
+       visible="false"
+       alpha="0"
+       enabled="false"
+       align="lefttop"
+       edge="bottom"
+       oy="-20"
+       width="400"
+       autoheight="true"
+       background="false" backgroundcolor="0xFFFFFF" backgroundalpha="1.0"
+       border="false" bordercolor="0x000000" borderalpha="1.0"
+       borderwidth="1.0" roundedge="0"
+       shadow="0.0" shadowrange="4.0" shadowangle="45" shadowcolor="0x000000" shadowalpha="1.0"
+       textshadow="1" textshadowrange="6.0" textshadowangle="90" textshadowcolor="0x000000" textshadowalpha="1.0"
+       css=" text-align:center; color:#FFFFFF; font-family:Arial; font-weight:bold; font-size:14px;"
+       html=""
+/>
+
+  <layer name="vrtooltipa" keep="true"
+         url="%SWFPATH%/plugins/textfield.swf"
+         parent="STAGE"
+         visible="false"
+         alpha="0"
+         enabled="false"
+         align="lefttop"
+         edge="bottom"
+         oy="-20"
+         width="400"
+         autoheight="true"
+         background="false" backgroundcolor="0xFFFFFF" backgroundalpha="1.0"
+         border="false" bordercolor="0x000000" borderalpha="1.0"
+         borderwidth="1.0" roundedge="0"
+         shadow="0.0" shadowrange="4.0" shadowangle="45" shadowcolor="0x000000" shadowalpha="1.0"
+         textshadow="1" textshadowrange="6.0" textshadowangle="90" textshadowcolor="0x000000" textshadowalpha="1.0"
+         css=" text-align:center; color:#FFFFFF; font-family:Arial; font-weight:bold; font-size:14px;"
+         html=""
+/>
+
+  <layer name="tempLayer" keep="true"/>
+  
+  <!-- map opening - scale the map up to 100% (or smaller if the screen is too small) -->
+  <action name="openmap">
+    set(layer[map].onclick, closemap(); );
+    layer[map].changeorigin(center,center);
+    set(layer[map].visible, true);
+    set(bigscale,0.9);
+    set(mapalpha, get(layer[map].alpha));
+    if(layer[map].imagewidth GT stagewidth, div(bigscale, stagewidth, layer[map].imagewidth); );
+
+    tween(layer[map].x, 0);
+    tween(layer[map].y, 0);
+    tween(layer[map].alpha, 0.9);
+    tween(layer[map].scale, get(bigscale));
+  </action>
+
+  <!-- map closing - scale the map back to 0.3 of its image pixelsize -->
+  <action name="closemap">
+    set(layer[map].onclick, openmap(); );
+    layer[map].changeorigin(leftbottom,leftbottom);
+    set(layer[map].visible, true);
+    tween(layer[map].x, 0);
+    tween(layer[map].y, 0);
+    tween(layer[map].alpha, get(mapalpha));
+    tween(layer[map].scale, 0.3);
+  </action>
+
+  <!-- action for loading the scene when clicking on the map spots -->
+  <action name="mapspot_loadscene">
+    if(layer[map].scale GT 0.3,
+    <!-- special mode for zoomed map: hide big map, loadscene, show small map -->
+    set(layer[map].enabled, false);
+    tween(layer[map].alpha, 0.0, 0.3, default,
+    loadscene(%1, null, MERGE, BLEND(1));
+
+    set(layer[map].onclick, openmap(); );
+    layer[map].changeorigin(leftbottom,leftbottom);
+
+    set(layer[map].x, 0);
+    set(layer[map].y, 0);
+    set(layer[map].scale, 0.3);
+
+    set(events[sceneload].onloadcomplete,
+    delayedcall(1,
+    tween(layer[map].alpha, 1.0, 0.3, default, set(layer[map].enabled, true); );
+    );
+    );
+    );
+    ,
+    <!-- small map: just load the scene -->
+    loadscene(%1, null, MERGE, BLEND(1));
+    );
+  </action>
+
+  <!-- radar layer (overlays the normal spot too, but is behind the activespot image) -->
+  <layer name="radar" keep="true"
+	       url.flash="%SWFPATH%/plugins/radar.swf"
+	       url.html5="%SWFPATH%/plugins/radar.js"
+	       align="center" zorder="1"
+	       scale.mobile="1.5"
+	       fillalpha="0.3" fillcolor="0xFFFFFF"
+	       linewidth="1.0" linecolor="0xFF0000" linealpha="0.7"
+         visible="false"
+	       />
+
+  <!-- active spot image (overlays the normal spot) -->
+  <layer name="activespot" url="./mappointactive.png" keep="true"
+	       align="lefttop" edge="center" ox="32" oy="32"  zorder="2" scale.mobile="2"
+         visible="false"
+	       />
+
+
+  <action name="set_css_id" type="Javascript">
+    caller.sprite.id = args[1];
+  </action>
+
+  <action name="makescreenshot" type="Javascript">
+    <![CDATA[
+      if (krpano.webGL && krpano.webGL.context.getContextAttributes().preserveDrawingBuffer)
+      {
+        try
+        {
+            var img_src = krpano.webGL.canvas.toDataURL();
+            setLookat(img_src);
+        }
+        catch(err)
+        {
+            krpano.trace(3,err);
+        }
+      }
+      else
+      {
+        krpano.trace(3,"no webgl or no preserveDrawingBuffer");
+      }
+      ]]>
+  </action>
+</krpano>

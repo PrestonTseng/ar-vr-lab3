@@ -1,0 +1,176 @@
+{
+    "manifest": {
+        "short_name": "AR/VR Lab3",
+        "name": "AR/VR Lab3",
+        "start_url": "./index.html",
+        "display": "standalone",
+        "background_color": "#FFE9D2",
+        "theme_color": "#FFE1C4",
+        "orientation": "portrait-primary",
+        "icons": [{
+            "src": "./images/logo.jpg",
+            "sizes": "296x296",
+            "type": "image/jpeg"
+        }]
+    },
+    "scenes": [
+        {
+            "id": "center",
+            "title": "土木系館 2F",
+            "map": "",
+            "heading": 0,
+            "view": {
+                "hlookat": 0.0,
+                "vlookat": 0.0,
+                "fovtype": "MFOV",
+                "fov": 120,
+                "maxpixelzoom": 2.0,
+                "fovmin": 70,
+                "fovmax": 140,
+                "limitview": "auto"
+            },
+            "preview": {
+                "url": "",
+                "type": "grid(cube,64,64,512,0xCCCCCC,0xF6F6F6,0x999999);"
+            },
+            "image": {
+                "type": "cube",
+                "url": "%VIEWER%/images/center/center_%s.jpg"
+            },
+            "compare":{
+                "id": "",
+                "url": ""
+            },
+            "hotspots": [{
+                    "id": "right",
+                    "style": "hs_circle",
+                    "ath": "96.25",
+                    "atv": "2.6",
+                    "tag": "右側走廊"
+                },
+                {
+                    "id": "left",
+                    "style": "hs_circle",
+                    "ath": "-85.94",
+                    "atv": "6.72",
+                    "tag": "左側走廊"
+                },
+                {
+                    "id": "up",
+                    "style": "hs_circle",
+                    "ath": "3.03",
+                    "atv": "-19.28",
+                    "tag": "土木系館 3F"
+                }
+            ]
+        },
+        {
+            "id": "right",
+            "title": "右側走廊",
+            "map": "",
+            "heading": 0,
+            "view": {
+                "hlookat": 90.0,
+                "vlookat": 0.0,
+                "fovtype": "MFOV",
+                "fov": 120,
+                "maxpixelzoom": 2.0,
+                "fovmin": 70,
+                "fovmax": 140,
+                "limitview": "auto"
+            },
+            "preview": {
+                "url": "",
+                "type": "grid(cube,64,64,512,0xCCCCCC,0xF6F6F6,0x999999);"
+            },
+            "image": {
+                "type": "cube",
+                "url": "%VIEWER%/images/right/right_%s.jpg"
+            },
+            "compare":{
+                "id": "",
+                "url": ""
+            },
+            "hotspots": [{
+                    "id": "center",
+                    "style": "hs_circle",
+                    "ath": "275.94",
+                    "atv": "0.685",
+                    "tag": "中央廣場"
+                }
+            ]
+        },
+
+        {
+            "id": "left",
+            "title": "左側走廊",
+            "map": "",
+            "heading": 0,
+            "view": {
+                "hlookat": -90.0,
+                "vlookat": 0.0,
+                "fovtype": "MFOV",
+                "fov": 120,
+                "maxpixelzoom": 2.0,
+                "fovmin": 70,
+                "fovmax": 140,
+                "limitview": "auto"
+            },
+            "preview": {
+                "url": "",
+                "type": "grid(cube,64,64,512,0xCCCCCC,0xF6F6F6,0x999999);"
+            },
+            "image": {
+                "type": "cube",
+                "url": "%VIEWER%/images/left/left_%s.jpg"
+            },
+            "compare":{
+                "id": "",
+                "url": ""
+            },
+            "hotspots": [{
+                "id": "center",
+                "style": "hs_circle",
+                "ath": "92.62",
+                "atv": "3.86",
+                "tag": "中央廣場"
+            }]
+        },
+
+        {
+            "id": "up",
+            "title": "土木系館 3F",
+            "map": "",
+            "heading": 0,
+            "view": {
+                "hlookat": 0.0,
+                "vlookat": 0.0,
+                "fovtype": "MFOV",
+                "fov": 120,
+                "maxpixelzoom": 2.0,
+                "fovmin": 70,
+                "fovmax": 140,
+                "limitview": "auto"
+            },
+            "preview": {
+                "url": "",
+                "type": "grid(cube,64,64,512,0xCCCCCC,0xF6F6F6,0x999999);"
+            },
+            "image": {
+                "type": "cube",
+                "url": "%VIEWER%/images/up/up_%s.jpg"
+            },
+            "compare":{
+                "id": "",
+                "url": ""
+            },
+            "hotspots": [{
+                "id": "center",
+                "style": "hs_circle",
+                "ath": "183.93",
+                "atv": "33.3",
+                "tag": "中央廣場"
+            }]
+        }
+    ]
+}
